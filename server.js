@@ -8,7 +8,7 @@ let idCounter = 0;
 app.post("/unset", (req, res) => {
 	idCounter+=1;
 	resolvedMap.set(idCounter, false)
-	res.send(idCounter);
+	res.send(idCounter.toString());
 })
 
 app.post("/set/:id", (req, res) => {
