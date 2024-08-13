@@ -1,3 +1,4 @@
+const kv = require('@vercel/kv')
 const express = require('express')
 const app = express()
 const port = 3000
@@ -5,24 +6,28 @@ const port = 3000
 let resolvedMap = new Map();
 let idCounter = 0;
 
-app.post("/unset", (req, res) => {
-	idCounter+=1;
-	resolvedMap.set(idCounter, false)
-	res.send(idCounter.toString());
+app.post("/unset", async (req, res) => {
+	const id = await kv.get("id_counter");
+	await kv.set(id.toString(), 0);
+	res.send(id.toString());
+	await kv.set('id counter', id + 1)
 })
 
-app.post("/set/:id", (req, res) => {
-	resolvedMap.set(parseInt(req.params["id"]), true);
+app.post("/set/:id", async (req, res) => {
+	await kv.set(parseInt(req.params["id"]), 1);
 	res.send("ok")
 })
 
-app.get("/get/:id", (req, res) => {
-	res.send(resolvedMap.get(parseInt(req.params["id"])) ? "1" : "0")
+app.get("/get/:id", async (req, res) => {
+	const resolveStatus = await kv.get(req.params["id"])
+	res.send(resolveStatus.toString())
 })
 
 
-app.listen(port, () => {
+app.listen(port, async () => {
 	console.log(`Example app listening on port ${port}`)
+	await kv.set("id_counter", 0)
+	console.log("Initial id_counter set")
 })
 
 module.export = app
