@@ -9,7 +9,8 @@ let idCounter = 0;
 app.post("/unset", async (req, res) => {
 	const id = await kv.get("id_counter");
 	await kv.set(id.toString(), 0);
-	await kv.set('id counter', id + 1)
+	const kvresp = await kv.set('id counter', id + 1)
+	console.log(kvresp)
 	res.send(id.toString());
 })
 
