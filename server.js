@@ -9,8 +9,8 @@ let idCounter = 0;
 app.post("/unset", async (req, res) => {
 	const id = await kv.get("id_counter");
 	await kv.set(id.toString(), 0);
-	res.send(id.toString());
 	await kv.set('id counter', id + 1)
+	res.send(id.toString());
 })
 
 app.post("/set/:id", async (req, res) => {
@@ -26,8 +26,6 @@ app.get("/get/:id", async (req, res) => {
 
 app.listen(port, async () => {
 	console.log(`Example app listening on port ${port}`)
-	const resp = await kv.set("id_counter", 0)
-	console.log(resp)
 	console.log("Initial id_counter set")
 })
 
