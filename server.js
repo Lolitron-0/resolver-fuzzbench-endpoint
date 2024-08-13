@@ -1,7 +1,7 @@
 const kv = require('@vercel/kv').kv
 const express = require('express')
 const app = express()
-const port = 8080 
+const port = 8080
 
 let resolvedMap = new Map();
 let idCounter = 0;
@@ -26,6 +26,10 @@ app.get("/get/:id", async (req, res) => {
 
 app.listen(port, async () => {
 	console.log(`Example app listening on port ${port}`)
+	const resp = await kv.get("id_counter")
+	if (!resp) {
+		await kv.set("id_counter", 0)
+	}
 	console.log("Initial id_counter set")
 })
 
