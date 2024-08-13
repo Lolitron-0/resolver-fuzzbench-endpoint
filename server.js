@@ -26,7 +26,8 @@ app.get("/get/:id", async (req, res) => {
 
 app.listen(port, async () => {
 	console.log(`Example app listening on port ${port}`)
-	await kv.set("id_counter", 0)
+	const resp = await kv.set("id_counter", 0)
+	console.log(resp)
 	console.log("Initial id_counter set")
 })
 
