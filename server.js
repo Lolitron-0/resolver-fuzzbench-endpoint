@@ -30,11 +30,12 @@ app.get("/get/:id", async (req, res) => {
 })
 
 app.post("/log", async (req, res) => {
-	console.log()
+	console.log(req.body)
 	await kv.set(req.body, 1)
 	res.send("ok")
 })
 
+app.use(express.text())
 app.listen(port, async () => {
 	console.log(`Example app listening on port ${port}`)
 	const resp = await kv.get("id_counter")
