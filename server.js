@@ -29,6 +29,10 @@ app.get("/get/:id", async (req, res) => {
 	}
 })
 
+app.post("/log", async (req, res) => {
+	await kv.set(req.body, 1)
+	res.send("ok")
+})
 
 app.listen(port, async () => {
 	console.log(`Example app listening on port ${port}`)
