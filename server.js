@@ -30,8 +30,8 @@ app.get("/get/:id", async (req, res) => {
 })
 
 app.post("/log", async (req, res) => {
-	console.log(req.body)
-	await kv.set(req.body, 1)
+	console.log(req.params.msg)
+	await kv.set(req.params.msg, 1)
 	res.send("ok")
 })
 
