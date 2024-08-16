@@ -35,7 +35,7 @@ app.post("/log", async (req, res) => {
 	res.send("ok")
 })
 
-app.use(bodyParser.text());
+app.use(express.text())
 app.listen(port, async () => {
 	console.log(`Example app listening on port ${port}`)
 	const resp = await kv.get("id_counter")
