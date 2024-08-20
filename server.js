@@ -5,6 +5,7 @@ const port = 8080
 
 let resolvedMap = new Map();
 let idCounter = 0;
+let logCounter = 0
 
 app.post("/unset", async (req, res) => {
 	const id = await kv.get("id_counter");
@@ -33,6 +34,8 @@ app.post("/log", async (req, res) => {
 	let logCnt = await kv.get(req.query.msg)
 	logCnt = logCnt ? logCnt : 0
 	await kv.set(req.query.msg, logCnt + 1)
+	await kv.set("log" + logCounter.toString(), req.query.msg)
+	logCounter+=1;
 	res.send("ok")
 })
 
