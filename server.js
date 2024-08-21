@@ -40,6 +40,7 @@ app.post("/log", async (req, res) => {
 		logCnt = logCnt ? logCnt : 0
 		await kv.set(req.query.msg, logCnt + 1)
 		logCounter += 1;
+		await kv.set("log" + logCounter.toString(), req.query.msg)
 	}
 	res.send("ok")
 })
