@@ -31,11 +31,15 @@ app.get("/get/:id", async (req, res) => {
 })
 
 app.post("/log", async (req, res) => {
-	let logCnt = await kv.get(req.query.msg)
-	logCnt = logCnt ? logCnt : 0
-	await kv.set(req.query.msg, logCnt + 1)
-	await kv.set("log" + logCounter.toString(), req.query.msg)
-	logCounter+=1;
+	try {
+		await kv.set("log" + logCounter.toString(), req.query.msg)
+	}
+	catch (error) {
+		let logCnt = await kv.get(req.query.msg)
+		logCnt = logCnt ? logCnt : 0
+		await kv.set(req.query.msg, logCnt + 1)
+		logCounter += 1;
+	}
 	res.send("ok")
 })
 
