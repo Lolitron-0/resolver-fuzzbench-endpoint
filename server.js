@@ -31,9 +31,9 @@ app.get("/get/:id", async (req, res) => {
 })
 
 app.post("/log", async (req, res) => {
-	// let logCnt = await kv.get(req.query.msg)
-	// logCnt = logCnt ? logCnt : 0
-	// await kv.set(req.query.msg, logCnt + 1)
+	let logCnt = await kv.get(req.query.msg)
+	logCnt = logCnt ? logCnt : 0
+	await kv.set(req.query.msg, logCnt + 1)
 
 	res.send("ok")
 })
